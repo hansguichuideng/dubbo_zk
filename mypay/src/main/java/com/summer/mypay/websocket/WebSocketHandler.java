@@ -6,10 +6,12 @@ import com.google.common.collect.Maps;
 import com.summer.mypay.pojo.ClientMessage;
 import com.summer.mypay.pojo.ReturnResult;
 import com.summer.mypay.service.websocket.WebSocketService;
+import org.apache.commons.codec.binary.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -41,7 +43,19 @@ public class WebSocketHandler extends TextWebSocketHandler {
             sessionMap.put(clientMessage.getClientName(), session);
             return;
         } else if (clientMessage.getType() == ClientMessage.living) {
+
             logger.debug("收到 设备: {} 保存活信息", clientMessage.getClientName());
+
+            //当上报表的account在缓存中不存在的时候,断开
+            try {
+                if (!sessionMap.containsKey(clientMessage.getClientName())) {
+                    logger.warn("收到 设备: {} 保存活信息,但缓存中不存在,将断开重新连接", clientMessage.getClientName());
+                    sessionMap.put(clientMessage.getClientName(), session);
+                }
+            } catch (Exception e) {
+                logger.error("", e);
+            }
+
             return;
         }
 
@@ -55,6 +69,24 @@ public class WebSocketHandler extends TextWebSocketHandler {
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
         logger.debug("创建websocket成功sessionid为:{} " + session.getId());
+    }
+
+
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+
+        String willClose = null;
+        for (String key : sessionMap.keySet()) {
+            if (StringUtils.equals(session.getId(), sessionMap.get(key).getId())) {
+                willClose = key;
+            }
+        }
+        if (org.apache.commons.lang3.StringUtils.isNotBlank(willClose)) {
+            sessionMap.remove(willClose);
+        }
+        logger.warn("{}的websocket断开连接,等待重新连接", willClose);
+
+        super.afterConnectionClosed(session, status);
     }
 
     //发送信息
