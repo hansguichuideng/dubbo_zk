@@ -10,6 +10,7 @@
 
 
     <appender name="dailyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <param name="Encoding" value="UTF-8" />
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- daily rolling over -->
             <!--<FileNamePattern>/var/logs/${APP_NAME}-%d{yyyy-MM-dd}.log</FileNamePattern>-->
