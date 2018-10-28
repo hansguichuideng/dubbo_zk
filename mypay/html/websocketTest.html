@@ -15,7 +15,7 @@
 
             console.log("加载完成,建立websocket");
 
-            ws = new WebSocket("ws://127.0.0.1:18888/channel");
+            ws = new WebSocket("ws://websocket.huaruipay.com/channel");
             ws.onopen = function () {
                 var message = {};
                 message.clientName = "test";

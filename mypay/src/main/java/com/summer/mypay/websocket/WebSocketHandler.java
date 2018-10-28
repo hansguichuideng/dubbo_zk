@@ -99,6 +99,8 @@ public class WebSocketHandler extends TextWebSocketHandler {
             if (sessionMap.get(clientMessage.getClientName()) != null) {
                 sessionMap.get(clientMessage.getClientName()).sendMessage(new TextMessage(JSONObject.toJSONString(clientMessage)));
             } else {
+                logger.warn("向设备:{} 发送请求: 但该设置连接未建立,不可使用", clientMessage.getClientName(), JSONObject.toJSONString(clientMessage));
+
                 return new ReturnResult(-1, "该设置连接未建立,不可使用");
             }
         } catch (IOException e) {

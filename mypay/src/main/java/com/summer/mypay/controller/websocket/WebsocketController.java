@@ -41,7 +41,7 @@ public class WebsocketController {
      * @return
      */
     @RequestMapping("requestQR")
-    public ModelAndView requestQR(@RequestParam("clientName") String clientName, @RequestParam("money") String money, @RequestParam("mark") String mark) {
+    public Object requestQR(@RequestParam("clientName") String clientName, @RequestParam("money") String money, @RequestParam("mark") String mark) {
 
         JSONObject params = new JSONObject();
         params.put("clientName", clientName);
