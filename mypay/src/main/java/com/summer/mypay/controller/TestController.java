@@ -5,6 +5,7 @@ import com.summer.mypay.pojo.ReturnResult;
 import com.summer.mypay.pojo.WebSocketResult;
 import com.summer.mypay.view.WebsocketView;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,6 +16,7 @@ public class TestController {
 
 
     @RequestMapping("test2")
+    @ResponseBody
     public Object test2() {
         return new ReturnResult();
     }
