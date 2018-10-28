@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.0.js"></script>
+
+
+    <script type="text/javascript">
+
+        var ws;
+
+        $(document).ready(function () {
+
+            console.log("加载完成,建立websocket");
+
+            ws = new WebSocket("ws://127.0.0.1:18888/channel");
+            ws.onopen = function () {
+                var message = {};
+                message.clientName = "test";
+                message.type = 0;
+                message.content = "this is test come to see you";
+                ws.send(JSON.stringify(message));
+            };
+
+
+
+
+
+            message = {};
+            message.clientName = "test";
+            message.type = 0;
+            message.mid = 0;
+            message.content = "测试二维码";
+
+            console.log(JSON.stringify(message))
+            // ws.send(JSON.stringify(message))
+
+
+        });
+
+    </script>
+
+
+</head>
+<body>
+
+</body>
+</html>
