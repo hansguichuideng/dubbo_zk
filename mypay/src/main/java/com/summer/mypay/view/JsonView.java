@@ -43,6 +43,7 @@ public class JsonView implements View {
 
         PrintWriter printWriter = null;
         try {
+            printWriter = httpServletResponse.getWriter();
             printWriter.print(map.get(WebSocketResult.content));
         } catch (Exception e) {
             e.printStackTrace();
