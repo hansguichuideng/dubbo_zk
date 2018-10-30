@@ -35,9 +35,9 @@ public class WebsocketController {
     /**
      * 请求二维码
      *
-     * @param clientName    请求客户端
-     * @param money         金额
-     * @param mark          自定义交易号
+     * @param clientName 请求客户端
+     * @param money      金额
+     * @param mark       自定义交易号
      * @return
      */
     @RequestMapping("requestQR")
@@ -62,8 +62,8 @@ public class WebsocketController {
     /**
      * 请求交易信息
      *
-     * @param clientName    请求客户端
-     * @param mark          自定义交易号
+     * @param clientName 请求客户端
+     * @param mark       自定义交易号
      * @return
      */
     @RequestMapping("requestOrderInfo")
@@ -83,6 +83,28 @@ public class WebsocketController {
         return new ModelAndView(WebsocketView.BEANNAME, new WebSocketResult(clientMessage.getMid(), null));
     }
 
+
+    /**
+     * 请求交易信息
+     *
+     * @param clientName 请求客户端
+     * @return
+     */
+    @RequestMapping("requestCookies")
+    public ModelAndView requestCookies(@RequestParam("clientName") String clientName) {
+
+        JSONObject params = new JSONObject();
+        params.put("clientName", clientName);
+
+        ClientMessage clientMessage = new ClientMessage(clientName, params.toJSONString());
+        clientMessage.setType(ClientMessage.cookie_query);
+        ReturnResult tmpResult = webSocketService.sendMessage(clientMessage);
+
+        if (tmpResult.getCode() != 200) {
+            return new ModelAndView(JsonView.BEANNAME, new WebSocketResult(clientMessage.getMid(), JSONObject.toJSONString(tmpResult)));
+        }
+        return new ModelAndView(WebsocketView.BEANNAME, new WebSocketResult(clientMessage.getMid(), null));
+    }
 
 
 }

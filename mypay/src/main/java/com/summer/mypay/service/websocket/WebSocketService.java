@@ -42,7 +42,7 @@ public class WebSocketService {
     /**
      * 客户端返回结果集
      */
-    Cache<String, Object> client_index_content = CacheBuilder.newBuilder().expireAfterAccess(1, TimeUnit.MINUTES).build();
+    Cache<String, Object> client_index_content = CacheBuilder.newBuilder().expireAfterAccess(5, TimeUnit.MINUTES).build();
 
 
     public void writeWebScoketResult(String mid, String content) {

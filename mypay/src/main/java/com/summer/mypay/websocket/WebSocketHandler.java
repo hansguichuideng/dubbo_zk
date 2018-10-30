@@ -6,7 +6,7 @@ import com.google.common.collect.Maps;
 import com.summer.mypay.pojo.ClientMessage;
 import com.summer.mypay.pojo.ReturnResult;
 import com.summer.mypay.service.websocket.WebSocketService;
-import org.apache.commons.codec.binary.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,16 +59,10 @@ public class WebSocketHandler extends TextWebSocketHandler {
             return;
         }
 
-        logger.debug("收到 设备: {} 业务信息: {}", clientMessage.getClientName(), clientMessage.getContent());
+        logger.debug("收到 设备: {} 业务信息: {}", clientMessage.getClientName(), JSONObject.toJSONString(clientMessage));
 
         //收到其它信息->收到其它信息写入结果集合
         webSocketService.writeWebScoketResult(clientMessage.getMid(), clientMessage.getContent());
-    }
-
-
-    @Override
-    public void afterConnectionEstablished(WebSocketSession session) {
-        logger.debug("创建websocket成功sessionid为:{} " + session.getId());
     }
 
 
@@ -79,9 +73,10 @@ public class WebSocketHandler extends TextWebSocketHandler {
         for (String key : sessionMap.keySet()) {
             if (StringUtils.equals(session.getId(), sessionMap.get(key).getId())) {
                 willClose = key;
+                break;
             }
         }
-        if (org.apache.commons.lang3.StringUtils.isNotBlank(willClose)) {
+        if (StringUtils.isNotBlank(willClose)) {
             sessionMap.remove(willClose);
         }
         logger.warn("{}的websocket断开连接,等待重新连接", willClose);
