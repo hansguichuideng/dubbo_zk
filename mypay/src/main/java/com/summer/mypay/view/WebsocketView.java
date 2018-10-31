@@ -77,7 +77,7 @@ public class WebsocketView implements View {
             }
             String result = webSocketService.readWebScoketResult(mid).toString();
 
-            printWriter.print(JSONObject.toJSONString(result));
+            printWriter.print(JSONObject.parseObject(result));
 
         } catch (IOException e) {
             e.printStackTrace();
