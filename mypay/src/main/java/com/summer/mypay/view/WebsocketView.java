@@ -74,6 +74,7 @@ public class WebsocketView implements View {
             Object or = webSocketService.readWebScoketResult(mid);
             if (or == null) {
                 printWriter.print(JSONObject.toJSONString(new ReturnResult(-1, "对不起,系统正忙,请稍候再试")));
+                return;
             }
             String result = webSocketService.readWebScoketResult(mid).toString();
 
