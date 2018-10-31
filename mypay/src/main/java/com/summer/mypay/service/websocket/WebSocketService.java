@@ -39,6 +39,14 @@ public class WebSocketService {
     }
 
 
+    public ReturnResult isLive(String clientName) {
+        try {
+            return new ReturnResult(webSocketHandler.isLive(clientName));
+        } catch (Exception e) {
+            return new ReturnResult(-1, "查看失败");
+        }
+    }
+
     /**
      * 客户端返回结果集
      */

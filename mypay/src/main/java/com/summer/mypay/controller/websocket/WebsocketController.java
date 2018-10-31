@@ -10,6 +10,7 @@ import com.summer.mypay.view.WebsocketView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -127,6 +128,20 @@ public class WebsocketController {
             return new ModelAndView(JsonView.BEANNAME, new WebSocketResult(clientMessage.getMid(), JSONObject.toJSONString(tmpResult)));
         }
         return new ModelAndView(WebsocketView.BEANNAME, new WebSocketResult(clientMessage.getMid(), null));
+    }
+
+
+    /**
+     * 请求交易信息
+     *
+     * @param clientName 请求客户端
+     * @return
+     */
+    @RequestMapping("isLive")
+    @ResponseBody
+    public Object isLive(@RequestParam("clientName") String clientName) {
+        ReturnResult tmpResult = webSocketService.isLive(clientName);
+        return tmpResult;
     }
 
 

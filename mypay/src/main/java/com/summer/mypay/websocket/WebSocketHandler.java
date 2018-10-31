@@ -31,6 +31,15 @@ public class WebSocketHandler extends TextWebSocketHandler {
     @Autowired
     private WebSocketService webSocketService;
 
+
+    public Boolean isLive(String clientName) {
+        if (sessionMap.get(clientName) != null && sessionMap.get(clientName).isOpen()) {
+            return true;
+        }
+        return false;
+    }
+
+
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
         logger.debug("收到信息: {}", message.getPayload());
