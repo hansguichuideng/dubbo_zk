@@ -42,7 +42,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
-        logger.debug("收到信息: {}", message.getPayload());
+        logger.debug("<<<<: {}", message.getPayload());
 
         ClientMessage clientMessage = JSONObject.parseObject(message.getPayload(), ClientMessage.class);
 
@@ -93,7 +93,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
     //发送信息
     public ReturnResult sendMessage(ClientMessage clientMessage) {
 
-        logger.debug("向设备:{} 发送请求: {}", clientMessage.getClientName(), JSONObject.toJSONString(clientMessage));
+        logger.debug(">>>> 设备:{} 发送请求: {}", clientMessage.getClientName(), JSONObject.toJSONString(clientMessage));
         try {
             if (sessionMap.get(clientMessage.getClientName()) != null) {
                 sessionMap.get(clientMessage.getClientName()).sendMessage(new TextMessage(JSONObject.toJSONString(clientMessage)));
