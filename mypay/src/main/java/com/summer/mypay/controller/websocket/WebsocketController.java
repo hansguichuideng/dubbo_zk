@@ -107,4 +107,27 @@ public class WebsocketController {
     }
 
 
+    /**
+     * 请求交易信息
+     *
+     * @param clientName 请求客户端
+     * @return
+     */
+    @RequestMapping("requestOrderNoSend")
+    public ModelAndView requestOrderNoSend(@RequestParam("clientName") String clientName) {
+
+        JSONObject params = new JSONObject();
+        params.put("clientName", clientName);
+
+        ClientMessage clientMessage = new ClientMessage(clientName, params.toJSONString());
+        clientMessage.setType(ClientMessage.requestOrderNoSend);
+        ReturnResult tmpResult = webSocketService.sendMessage(clientMessage);
+
+        if (tmpResult.getCode() != 200) {
+            return new ModelAndView(JsonView.BEANNAME, new WebSocketResult(clientMessage.getMid(), JSONObject.toJSONString(tmpResult)));
+        }
+        return new ModelAndView(WebsocketView.BEANNAME, new WebSocketResult(clientMessage.getMid(), null));
+    }
+
+
 }

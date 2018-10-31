@@ -10,6 +10,7 @@ public class ClientMessage {
     public static int qr_query = 2;     //二维码请求
     public static int orderInfo = 3;    //查看订单信息
     public static int cookie_query = 4;    //查看订单信息
+    public static int requestOrderNoSend = 5;    //查看订单信息
 
     private String clientName;
 
