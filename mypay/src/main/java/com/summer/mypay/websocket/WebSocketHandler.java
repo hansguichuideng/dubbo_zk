@@ -67,7 +67,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
             return;
         } else if (clientMessage.getType() == ClientMessage.log) {
-            logger.debug(JSONObject.toJSONString(clientMessage));
+            logger.debug("====> {}",JSONObject.toJSONString(clientMessage));
             return;
         }
 
