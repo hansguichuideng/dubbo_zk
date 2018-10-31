@@ -66,6 +66,9 @@ public class WebSocketHandler extends TextWebSocketHandler {
             }
 
             return;
+        } else if (clientMessage.getType() == ClientMessage.log) {
+            logger.debug(JSONObject.toJSONString(clientMessage));
+            return;
         }
 
         logger.debug("收到 设备: {} 业务信息: {}", clientMessage.getClientName(), JSONObject.toJSONString(clientMessage));

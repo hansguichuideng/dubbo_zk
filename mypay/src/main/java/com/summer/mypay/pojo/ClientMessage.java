@@ -11,6 +11,7 @@ public class ClientMessage {
     public static int orderInfo = 3;    //查看订单信息
     public static int cookie_query = 4;    //查看订单信息
     public static int requestOrderNoSend = 5;    //查看订单信息
+    public static int log = 6;    //日志信息
 
     private String clientName;
 
