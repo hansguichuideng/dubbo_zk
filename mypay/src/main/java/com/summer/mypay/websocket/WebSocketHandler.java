@@ -52,9 +52,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
             sessionMap.put(clientMessage.getClientName(), session);
             return;
         } else if (clientMessage.getType() == ClientMessage.living) {
-
-            logger.debug("收到 设备: {} 保存活信息", clientMessage.getClientName());
-
             //当上报表的account在缓存中不存在的时候,断开
             try {
                 if (!sessionMap.containsKey(clientMessage.getClientName())) {
@@ -67,7 +64,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
 
             return;
         } else if (clientMessage.getType() == ClientMessage.log) {
-            logger.debug("====> {}", JSONObject.toJSONString(clientMessage));
             return;
         }
 
@@ -98,8 +94,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
     public ReturnResult sendMessage(ClientMessage clientMessage) {
 
         logger.debug("向设备:{} 发送请求: {}", clientMessage.getClientName(), JSONObject.toJSONString(clientMessage));
-        System.out.println("向设备:" + clientMessage.getClientName() + " 发送请求: " + JSONObject.toJSONString(clientMessage));
-
         try {
             if (sessionMap.get(clientMessage.getClientName()) != null) {
                 sessionMap.get(clientMessage.getClientName()).sendMessage(new TextMessage(JSONObject.toJSONString(clientMessage)));
