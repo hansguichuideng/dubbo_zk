@@ -1,6 +1,6 @@
 package com.summer.mypay.config;
 
-import com.summer.mypay.websocket.WebSocketHandler;
+import com.summer.mypay.handler.WebSocketHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -14,10 +14,10 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
 
     @Autowired
-    private WebSocketHandler webSocketService;
+    private WebSocketHandler webSocketHandler;
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(webSocketService, "channel").setAllowedOrigins("*");
+        registry.addHandler(webSocketHandler, "channel").setAllowedOrigins("*");
     }
 }

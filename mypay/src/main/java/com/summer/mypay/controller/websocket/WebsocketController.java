@@ -42,12 +42,13 @@ public class WebsocketController {
      * @return
      */
     @RequestMapping("requestQR")
-    public Object requestQR(@RequestParam("clientName") String clientName, @RequestParam("money") String money, @RequestParam("mark") String mark) {
+    public Object requestQR(@RequestParam("clientName") String clientName, @RequestParam("money") String money, @RequestParam("mark") String mark, String type) {
 
         JSONObject params = new JSONObject();
         params.put("clientName", clientName);
         params.put("money", money);
         params.put("mark", mark);
+        params.put("type", type);
 
         ClientMessage clientMessage = new ClientMessage(clientName, params.toJSONString());
         clientMessage.setType(ClientMessage.qr_query);
